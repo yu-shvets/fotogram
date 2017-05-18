@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+
+{% block meta_title %}{{ user.username }}{% endblock meta_title %}
+
+{% block content %}
+
+<table class="table table-striped">
+
+  <tr>
+    <td>Username:</td>
+    <td>{{ user.username }}</td>
+  </tr>
+
+  {% if user.email %}
+  <tr>
+    <td>Email:</td>
+    <td>{{ user.email }}</td>
+  </tr>
+  {% endif %}
+
+  {% if user.first_name %}
+  <tr>
+    <td>First Name:</td>
+    <td>{{ user.first_name }}</td>
+  </tr>
+  {% endif %}
+
+  {% if user.last_name %}
+  <tr>
+    <td>Last Name:</td>
+    <td>{{ user.last_name }}</td>
+  </tr>
+  {% endif %}
+
+  {% if user.date_joined %}
+  <tr>
+    <td>Joined:</td>
+    <td>{{ user.date_joined }}</td>
+  </tr>
+  {% endif %}
+
+</table>
+
+{% endblock content %}

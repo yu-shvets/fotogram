@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+
+{% block meta_title %}Comment a post{% endblock meta_title %}
+
+{% block search %} {% endblock %}
+
+{% block content %}
+
+      <p><a href="#">{{ object.user }}</a> {{ object.datetime }}</p>
+      <p>{{ object.description }}</p>
+      <img src={{ object.photo.url }} height="500" width="500" />
+
+      {% include "comment_form.html" %}
+
+      {% for comment in comments %}
+
+          {{ comment.author }} {{ comment.datetime }}
+          <p>{{ comment.comment }}</p>
+
+          <hr>
+
+      {% endfor %}
+
+{% endblock content %}

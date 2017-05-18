@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% block meta_title %}New post{% endblock meta_title %}
+
+{% block search %} {% endblock %}
+
+{% block form %}
+
+    <div style="margin-bottom: 20px">
+        <form method="post" enctype="multipart/form-data" action="{% url 'newpost' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+          <input type="submit" value="Submit" class="btn"/>
+        </form>
+    </div>
+
+{% endblock form %}
+

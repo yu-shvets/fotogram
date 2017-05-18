@@ -1,0 +1,100 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fotogram - {% block meta_title %}{% endblock meta_title %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href={{ PORTAL_URL }}{% static "main.css" %}>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <h4 class="navbar-text"><a href="{% url "home" %}">FOTOGRAM</a></h4>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url "newpost" %}">New post</a></li>
+
+                {% block search %}
+                    <li>
+                        <div class="search">
+                          <form method="get" action={% url "home" %}>
+
+                              <input type="search" name="query" />
+                              <input type="Submit" value="Search" />
+
+                          </form>
+                        </div>
+                    </li>
+                {% endblock %}
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url "profile" %}">{{ user.username }}</a></li>
+                    <li><a href="{% url "users:auth_logout" %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url "users:auth_login" %}">Login</a></li>
+                    <li><a href="{% url "users:registration_register" %}">Register</a></li>
+                {% endif %}
+            </ul>
+            </ul>
+        </nav>
+
+
+
+        <div class="post">
+
+        {% block form %}{% endblock %}
+
+        {% block content %}
+
+            {% for post in object_list %}
+                <div class="single">
+                <p><a href="{% url "user_posts" post.user.id %}">{{ post.user }}</a> {{ post.datetime }}</p>
+                <p>{{ post.description }}</p>
+                <img src={{ post.photo.url }} height="500" width="500" />
+
+                <button data-id="{{ post.id }}" class="btn btn-primary like" type="button">
+                Like: {{ post.like }}
+                </button>
+
+                <button id="{{ forloop.counter }}" class="btn btn-primary comment_button">Comment</button>
+                <a href="{% url 'delete' post.id %}" class="btn btn-primary">Delete</a>
+                <span>{{ request.GET.message }}</span>
+
+                <div class="comment_block" id="block-{{ forloop.counter }}">
+                <p>Please, leave your comment:</p>
+                <form method="post" action="{% url 'create_comment' post.id %}" class="comment_form"
+                      id="{{ post.id }}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" class="btn btn-primary"/>
+                </form>
+                </div>
+
+                    <p id="comments">Comments:</p>
+
+                    <div id="result-{{ post.id }}">
+                {% for comment in post.comments_set.all %}
+
+                    {{ comment.author }} | {{ comment.datetime }}
+                    <p>{{ comment.comment }}</p>
+
+                    <hr>
+
+
+                {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+    {% endblock content %}
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    {% block js %}<script src="{% static "js/main.js" %}"></script>{% endblock %}
+</body>
+</html>

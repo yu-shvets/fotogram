@@ -1,0 +1,33 @@
+.container {
+    width: 70%;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.auth_form {
+    width: 40%;
+    float: right;
+}
+
+.post {
+    margin: auto;
+    width: 50%;
+}
+
+img {
+    margin-bottom: 5px;
+}
+
+#comments {
+    margin-top: 5px;
+}
+
+.single {
+    margin-bottom: 50px;
+}
+
+.search {
+    margin-top: 10px;
+}

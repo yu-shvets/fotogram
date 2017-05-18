@@ -1,0 +1,7 @@
+
+      <p>Please, leave your comment:</p>
+      <form method="post" action="{% url 'comment_form' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+      <input type="submit" value="Submit" class="btn"/>
+      </form>
