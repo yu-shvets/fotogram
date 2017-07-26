@@ -53,7 +53,7 @@
                 <div class="single">
                 <p><a href="{% url "user_posts" post.user.id %}">{{ post.user }}</a> {{ post.datetime }}</p>
                 <p>{{ post.description }}</p>
-                <img src={{ post.photo.url }} height="500" width="500" />
+                <img src={{ post.photo.url }} height="500" width="500" /><br>
 
                 <button data-id="{{ post.id }}" class="btn btn-primary like" type="button">
                 Like: {{ post.like }}

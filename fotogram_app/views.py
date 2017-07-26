@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from .models import Posts, Comments
 from django.forms import ModelForm
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -16,6 +16,7 @@ class PostListView(ListView):
 
     model = Posts
     template_name = 'index.html'
+    paginate_by = 2
 
     def get_queryset(self):
 
@@ -104,7 +105,6 @@ class NewPostCreate(LoginRequiredMixin, CreateView):
 
 def like_post(request):
     post_id = request.GET.get('post_id', None)
-    print(post_id)
     like = 0
     if post_id:
         post = Posts.objects.get(id=int(post_id))
@@ -144,4 +144,3 @@ class PostDelete(LoginRequiredMixin, DeleteView):
         if not obj.user == self.request.user:
             raise Exception('Unauthenticated user!!!')
         return obj
-
