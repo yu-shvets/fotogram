@@ -16,7 +16,6 @@ class PostListView(ListView):
 
     model = Posts
     template_name = 'index.html'
-    paginate_by = 2
 
     def get_queryset(self):
 

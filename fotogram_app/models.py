@@ -54,10 +54,22 @@ class Comments(models.Model):
         verbose_name="Author"
     )
 
-    comment = models.TextField(verbose_name="Comment")
+    comment = models.TextField(verbose_name="Comment", blank=True, null=True)
 
     post = models.ForeignKey(Posts)
 
     def __str__(self):
         return "{}".format(self.comment)
+
+
+class UserProfile(models.Model):
+
+    user = models.OneToOneField(User, related_name='profile')
+    birthday = models.DateField()
+    country = models.CharField(max_length=256)
+    city = models.CharField(max_length=256)
+
+    def __str__(self):
+        return "{}".format(self.user)
+
 
